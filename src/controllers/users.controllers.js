@@ -107,3 +107,20 @@ export async function searchUser(req, res) {
         res.status(500).send(err.message)
     }
 }
+
+export async function getUsers(req,res){
+    try{
+
+        const users = await users()
+
+        for(let i=0;i<users.rowCount;i++){
+            delete users.rows[i].password
+            delete users.rows[i].email
+        }
+
+        res.send(users.rows)
+
+    }catch(err){
+        res.status(500).send(err.message)
+    }
+}

@@ -37,3 +37,9 @@ export function usersByName(name) {
         `SELECT * FROM users WHERE name=$1;`, [name]
     )
 }
+
+export function users(){
+    return db.query(
+        `SELECT * FROM users`
+    )
+}
