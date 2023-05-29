@@ -25,3 +25,9 @@ export function createUser(name, email, image, biography, password) {
         VALUES ($1,$2,$3,$4,$5);`, [name, email, image, biography, password]
     )
 }
+
+export function userById(id){
+    return db.query(
+        `SELECT * FROM users WHERE id=$1;`,[id]
+    )
+}

@@ -1,7 +1,6 @@
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
-import { createSession, createUser, getUserByEmail } from "../repositories/user.repository.js";
-
+import { createSession, createUser, getUserByEmail,userById } from "../repositories/user.repository.js";
 
 export async function signUp(req, res) {
     const { name, email, image, biography, password } = req.body
@@ -45,6 +44,34 @@ export async function signIn(req, res) {
         await createSession(user.rows[0].id, token)
 
         res.send({ token })
+
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+export async function getUserMe(req,res){
+    const { userId } = res.locals
+
+    try {
+
+        const user = await userById(userId)
+
+        res.send(user.rows)
+
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+export async function getUser(req,res){
+    const { id } = req.params
+
+    try {
+
+        const user = await userById(id)
+
+        res.send(user.rows)
 
     } catch (err) {
         res.status(500).send(err.message)
