@@ -71,6 +71,9 @@ export async function getUser(req, res) {
 
         const user = await userById(id)
 
+        delete user.rows[0].password
+        delete user.rows[0].email
+
         res.send(user.rows)
 
     } catch (err) {
