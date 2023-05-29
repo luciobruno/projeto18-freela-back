@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
-import { createSession, createUser, getUserByEmail, userById, usersByName } from "../repositories/user.repository.js";
+import { createSession, createUser, getAllUsers, getUserByEmail, userById, usersByName} from "../repositories/user.repository.js";
 
 export async function signUp(req, res) {
     const { name, email, image, biography, password } = req.body
@@ -111,7 +111,7 @@ export async function searchUser(req, res) {
 export async function getUsers(req,res){
     try{
 
-        const users = await users()
+        const users = await getAllUsers()
 
         for(let i=0;i<users.rowCount;i++){
             delete users.rows[i].password

@@ -38,7 +38,7 @@ export function usersByName(name) {
     )
 }
 
-export function users(){
+export function getAllUsers(){
     return db.query(
         `SELECT * FROM users`
     )
