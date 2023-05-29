@@ -60,7 +60,7 @@ export async function getUserMe(req, res) {
         delete user.rows[0].password
         delete user.rows[0].email
 
-        res.send(user.rows)
+        res.send(user.rows[0])
 
     } catch (err) {
         res.status(500).send(err.message)
