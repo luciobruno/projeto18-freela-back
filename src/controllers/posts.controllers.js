@@ -37,10 +37,6 @@ export async function getPosts(req, res) {
 
         const posts = await getPostsByUserId(id)
 
-        if (posts.rowCount === 0) {
-            return res.status(404).send({ message: "Usuário não encontrado!" })
-        }
-
         res.send(posts.rows)
 
     } catch (err) {

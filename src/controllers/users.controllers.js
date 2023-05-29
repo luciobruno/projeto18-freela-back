@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import bcrypt from "bcrypt";
-import { createSession, createUser, getUserByEmail,userById } from "../repositories/user.repository.js";
+import { createSession, createUser, getUserByEmail, userById, usersByName } from "../repositories/user.repository.js";
 
 export async function signUp(req, res) {
     const { name, email, image, biography, password } = req.body
@@ -50,7 +50,7 @@ export async function signIn(req, res) {
     }
 }
 
-export async function getUserMe(req,res){
+export async function getUserMe(req, res) {
     const { userId } = res.locals
 
     try {
@@ -64,7 +64,7 @@ export async function getUserMe(req,res){
     }
 }
 
-export async function getUser(req,res){
+export async function getUser(req, res) {
     const { id } = req.params
 
     try {
@@ -72,6 +72,30 @@ export async function getUser(req,res){
         const user = await userById(id)
 
         res.send(user.rows)
+
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
+
+export async function searchUser(req, res) {
+
+    const { name } = req.body
+
+    try {
+
+        const users = await usersByName(name)
+
+        if(users.rowCount === 0){
+            return res.status(404).send({message: "Usuário não encontrado"})
+        }
+
+        for(let i=0;i<users.rowCount;i++){
+            delete users.rows[i].password
+            delete users.rows[i].email
+        }
+
+        res.send(users.rows)
 
     } catch (err) {
         res.status(500).send(err.message)

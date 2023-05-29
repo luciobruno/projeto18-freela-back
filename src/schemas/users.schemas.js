@@ -12,3 +12,7 @@ export const userSigninSchema = joi.object({
     email: joi.string().email().required(),
     password: joi.string().required()
 })
+
+export const searchUsersSchema =joi.object({
+    name: joi.string().required(),
+})

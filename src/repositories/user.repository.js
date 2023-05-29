@@ -26,8 +26,14 @@ export function createUser(name, email, image, biography, password) {
     )
 }
 
-export function userById(id){
+export function userById(id) {
     return db.query(
-        `SELECT * FROM users WHERE id=$1;`,[id]
+        `SELECT * FROM users WHERE id=$1;`, [id]
+    )
+}
+
+export function usersByName(name) {
+    return db.query(
+        `SELECT * FROM users WHERE name=$1;`, [name]
     )
 }
